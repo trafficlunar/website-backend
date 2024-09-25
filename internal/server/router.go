@@ -33,6 +33,11 @@ func NewRouter() {
 
 	r.Get("/currently-playing", handler.HandleGetCurrentlyPlaying)
 
-	slog.Info("Starting server", slog.Any("port", os.Getenv("PORT")))
-	http.ListenAndServe(":"+os.Getenv("PORT"), r)
+	port := os.Getenv("PORT")
+	if len(port) == 0 {
+		port = "8080"
+	}
+
+	slog.Info("Starting server", slog.Any("port", port))
+	http.ListenAndServe(":"+port, r)
 }
