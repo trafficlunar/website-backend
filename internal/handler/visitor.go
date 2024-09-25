@@ -14,5 +14,8 @@ func HandleGetVisitorCounter(w http.ResponseWriter, r *http.Request) {
 }
 
 func HandlePatchVisitorCounter(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("hello world"))
+	data := service.IncrementVisitorCounter()
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(data)
 }
