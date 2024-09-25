@@ -6,6 +6,8 @@ import (
 
 	"github.com/joho/godotenv"
 	"github.com/lmittmann/tint"
+
+	"backend/internal/server"
 )
 
 func main() {
@@ -17,5 +19,5 @@ func main() {
 		slog.Error("Error loading .env file", slog.Any("error", err))
 	}
 
-	slog.Info("Starting server", slog.Any("port", os.Getenv("PORT")))
+	server.NewRouter()
 }
