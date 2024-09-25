@@ -8,6 +8,7 @@ import (
 	"github.com/lmittmann/tint"
 
 	"backend/internal/server"
+	"backend/internal/worker"
 )
 
 func main() {
@@ -19,5 +20,6 @@ func main() {
 		slog.Error("Error loading .env file", slog.Any("error", err))
 	}
 
+	go worker.StartWorkers()
 	server.NewRouter()
 }

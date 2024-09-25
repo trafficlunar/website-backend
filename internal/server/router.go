@@ -29,6 +29,8 @@ func NewRouter() {
 	r.Get("/visitor-counter", handler.HandleGetVisitorCounter)
 	r.Patch("/visitor-counter", handler.HandlePatchVisitorCounter)
 
+	r.Get("/currently-playing", handler.HandleGetCurrentlyPlaying)
+
 	slog.Info("Starting server", slog.Any("port", os.Getenv("PORT")))
 	http.ListenAndServe(":"+os.Getenv("PORT"), r)
 }
