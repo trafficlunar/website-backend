@@ -11,19 +11,26 @@ import (
 )
 
 func GetVisitorCounter() model.VisitorCounter {
+	var data model.VisitorCounter
+
 	path := filepath.Join(".", "data", "visitor.json")
 	jsonFile, err := os.Open(path)
 	if err != nil {
-		slog.Warn("File not found!", slog.Any("file", path))
-		return model.VisitorCounter{}
+		slog.Warn("File not found or unable to open", slog.Any("error", err), slog.Any("file", path))
+		return data
+	}
+	defer jsonFile.Close()
+
+	bytes, err := io.ReadAll(jsonFile)
+	if err != nil {
+		slog.Error("Error reading file", slog.Any("error", err), slog.Any("file", path))
+		return data
 	}
 
-	bytes, _ := io.ReadAll(jsonFile)
-
-	var data model.VisitorCounter
 	err = json.Unmarshal(bytes, &data)
 	if err != nil {
 		slog.Error("Error unmarshalling JSON", slog.Any("error", err), slog.Any("file", path))
+		return data
 	}
 
 	return data
