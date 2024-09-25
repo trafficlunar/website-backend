@@ -8,6 +8,8 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
+
+	"backend/internal/handler"
 )
 
 func NewRouter() {
@@ -23,6 +25,9 @@ func NewRouter() {
 	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "https://axolotlmaid.com", http.StatusPermanentRedirect)
 	})
+
+	r.Get("/visitor-counter", handler.HandleGetVisitorCounter)
+	r.Patch("/visitor-counter", handler.HandlePatchVisitorCounter)
 
 	slog.Info("Starting server", slog.Any("port", os.Getenv("PORT")))
 	http.ListenAndServe(":"+os.Getenv("PORT"), r)
