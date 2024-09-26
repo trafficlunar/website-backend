@@ -27,6 +27,9 @@ func NewRouter() {
 	r.Use(httprate.LimitByRealIP(32, time.Minute))
 	r.Use(cors.Handler(cors.Options{
 		AllowedOrigins: []string{"https://axolotlmaid.com"},
+		AllowedMethods: []string{"GET", "PATCH"},
+		AllowedHeaders: []string{"Content-Type"},
+		MaxAge:         300,
 	}))
 
 	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
