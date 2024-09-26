@@ -33,7 +33,7 @@ func NewRouter() {
 	})
 
 	r.Get("/visitor-counter", handler.HandleGetVisitorCounter)
-	r.Patch("/visitor-counter", handler.HandlePatchVisitorCounter)
+	r.With(httprate.LimitByRealIP(1, time.Hour)).Patch("/visitor-counter", handler.HandlePatchVisitorCounter)
 
 	r.Get("/currently-playing", handler.HandleGetCurrentlyPlaying)
 
