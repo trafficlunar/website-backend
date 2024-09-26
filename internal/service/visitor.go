@@ -10,10 +10,10 @@ import (
 	"backend/internal/model"
 )
 
-const path = "./data/visitor.json"
+const path = "./data/visit.json"
 
-func GetVisitorCounter() model.VisitorCounter {
-	var data model.VisitorCounter
+func GetVisitCounter() model.VisitCounter {
+	var data model.VisitCounter
 
 	jsonFile, err := os.Open(path)
 	if err != nil {
@@ -37,8 +37,8 @@ func GetVisitorCounter() model.VisitorCounter {
 	return data
 }
 
-func IncrementVisitorCounter() model.Success {
-	data := GetVisitorCounter()
+func IncrementVisitCounter() model.Success {
+	data := GetVisitCounter()
 	data.Counter++
 
 	err := os.MkdirAll(filepath.Dir(path), 0755)

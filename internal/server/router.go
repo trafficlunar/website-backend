@@ -32,8 +32,8 @@ func NewRouter() {
 		http.Redirect(w, r, "https://axolotlmaid.com", http.StatusPermanentRedirect)
 	})
 
-	r.Get("/visitor-counter", handler.HandleGetVisitorCounter)
-	r.With(httprate.LimitByRealIP(1, time.Hour)).Patch("/visitor-counter", handler.HandlePatchVisitorCounter)
+	r.Get("/visit-counter", handler.HandleGetVisitCounter)
+	r.With(httprate.LimitByRealIP(1, time.Hour)).Patch("/visit-counter", handler.HandlePatchVisitCounter)
 
 	r.Get("/currently-playing", handler.HandleGetCurrentlyPlaying)
 
