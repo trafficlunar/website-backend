@@ -22,6 +22,7 @@ func NewRouter() {
 	r.Use(middleware.RealIP)
 	r.Use(middleware.Logger)
 	r.Use(middleware.Recoverer)
+	r.Use(middleware.Compress(5, "application/json"))
 	r.Use(middleware.Timeout(60 * time.Second))
 	r.Use(httprate.LimitByRealIP(32, time.Minute))
 	r.Use(cors.Handler(cors.Options{
