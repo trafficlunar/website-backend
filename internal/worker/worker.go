@@ -1,6 +1,10 @@
 package worker
 
+import "os"
+
 func StartWorkers() {
 	go StartLastFMWorker()
-	go StartStatusWorker()
+	if os.Getenv("STATUS") == "true" {
+		go StartStatusWorker()
+	}
 }
