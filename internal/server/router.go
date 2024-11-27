@@ -38,8 +38,11 @@ func NewRouter() {
 
 	r.Get("/visit-counter", handler.HandleGetVisitCounter)
 	r.With(httprate.LimitByRealIP(1, time.Hour)).Patch("/visit-counter", handler.HandlePatchVisitCounter)
+
 	r.Get("/currently-playing", handler.HandleGetCurrentlyPlaying)
 	r.Get("/status", handler.HandleGetStatus)
+
+	r.Get("/ws/computer", handler.HandleComputerWebsocket)
 
 	port := os.Getenv("PORT")
 	if len(port) == 0 {
