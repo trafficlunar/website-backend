@@ -16,7 +16,7 @@ var upgrader = websocket.Upgrader{
 	},
 }
 
-func HandleComputerWebsocket(w http.ResponseWriter, r *http.Request) {
+func HandleComputerWebSocket(w http.ResponseWriter, r *http.Request) {
 	conn, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
 		slog.Error("Error when upgrading websocket connection", slog.Any("error", err))
@@ -34,9 +34,9 @@ func HandleComputerWebsocket(w http.ResponseWriter, r *http.Request) {
 			break
 		}
 
-		var clientMessage model.ComputerWebsocketMessage
+		var clientMessage model.ComputerWebSocketMessage
 		if err := json.Unmarshal(message, &clientMessage); err != nil {
-			slog.Error("Error unmarshaling JSON", slog.Any("error", err))
+			slog.Error("Error unmarshalling JSON", slog.Any("error", err))
 			continue
 		}
 

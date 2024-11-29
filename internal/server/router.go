@@ -42,7 +42,7 @@ func NewRouter() {
 	r.Get("/currently-playing", handler.HandleGetCurrentlyPlaying)
 	r.Get("/status", handler.HandleGetStatus)
 
-	r.Get("/ws/computer", handler.HandleComputerWebsocket)
+	r.Get("/ws/computer", handler.HandleComputerWebSocket)
 
 	port := os.Getenv("PORT")
 	if len(port) == 0 {
