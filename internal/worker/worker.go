@@ -4,7 +4,7 @@ import "os"
 
 func StartWorkers() {
 	go StartLastFMWorker()
-	if os.Getenv("STATUS") == "true" {
+	if os.Getenv("UPTIME_KUMA_ENABLED") == "true" {
 		go StartStatusWorker()
 	}
 }
