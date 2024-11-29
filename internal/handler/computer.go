@@ -1,6 +1,8 @@
 package handler
 
 import (
+	"backend/internal/model"
+	"encoding/json"
 	"log/slog"
 	"net/http"
 
@@ -15,21 +17,29 @@ var upgrader = websocket.Upgrader{
 }
 
 func HandleComputerWebsocket(w http.ResponseWriter, r *http.Request) {
-	connection, err := upgrader.Upgrade(w, r, nil)
+	conn, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
 		slog.Error("Error when upgrading websocket connection", slog.Any("error", err))
 		return
 	}
-	defer connection.Close()
+	defer conn.Close()
 
 	slog.Info("Websocket connection established!")
 
+	// Read messages
 	for {
-		_, message, err := connection.ReadMessage()
+		_, message, err := conn.ReadMessage()
 		if err != nil {
-			slog.Error("Error reading WebSocket message", slog.Any("error", err))
+			slog.Error("WebSocket connection closed by client", slog.Any("error", err))
 			break
 		}
-		slog.Info("Recieved message", slog.Any("message", message))
+
+		var clientMessage model.ComputerWebsocketMessage
+		if err := json.Unmarshal(message, &clientMessage); err != nil {
+			slog.Error("Error unmarshaling JSON", slog.Any("error", err))
+			continue
+		}
+
+		slog.Info("Recieved message", slog.Any("message", clientMessage))
 	}
 }
