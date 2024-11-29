@@ -6,8 +6,7 @@ import (
 
 var ComputerData model.ComputerGraphData
 
-func AddComputerData(online bool, clientMessage model.ComputerWebSocketMessage) {
-	ComputerData.Online = online
+func AddComputerData(clientMessage model.ComputerWebSocketMessage) {
 	ComputerData.Cpu = append(ComputerData.Cpu, int(clientMessage.Cpu))
 	ComputerData.Ram = append(ComputerData.Ram, int(clientMessage.Ram))
 

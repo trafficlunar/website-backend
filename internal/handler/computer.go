@@ -26,14 +26,14 @@ func HandleComputerWebSocket(w http.ResponseWriter, r *http.Request) {
 	defer conn.Close()
 
 	slog.Info("Websocket connection established!")
-	online := true
+	service.ComputerData.Online = true
 
 	// Read messages
 	for {
 		_, message, err := conn.ReadMessage()
 		if err != nil {
 			slog.Error("WebSocket connection closed by client", slog.Any("error", err))
-			online = false
+			service.ComputerData.Online = false
 			break
 		}
 
@@ -43,7 +43,7 @@ func HandleComputerWebSocket(w http.ResponseWriter, r *http.Request) {
 			continue
 		}
 
-		service.AddComputerData(online, clientMessage)
+		service.AddComputerData(clientMessage)
 		slog.Info("Recieved message", slog.Any("message", clientMessage))
 	}
 }
