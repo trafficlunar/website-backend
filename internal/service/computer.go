@@ -4,7 +4,10 @@ import (
 	"backend/internal/model"
 )
 
-var ComputerData model.ComputerGraphData
+var ComputerData model.ComputerGraphData = model.ComputerGraphData{
+	Cpu: make([]int, 20),
+	Ram: make([]int, 20),
+}
 
 func AddComputerData(clientMessage model.ComputerWebSocketMessage) {
 	ComputerData.Cpu = append(ComputerData.Cpu, int(clientMessage.Cpu))
