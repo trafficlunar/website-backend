@@ -2,6 +2,7 @@ package handler
 
 import (
 	"backend/internal/model"
+	"backend/internal/service"
 	"encoding/json"
 	"log/slog"
 	"net/http"
@@ -25,12 +26,14 @@ func HandleComputerWebSocket(w http.ResponseWriter, r *http.Request) {
 	defer conn.Close()
 
 	slog.Info("Websocket connection established!")
+	online := true
 
 	// Read messages
 	for {
 		_, message, err := conn.ReadMessage()
 		if err != nil {
 			slog.Error("WebSocket connection closed by client", slog.Any("error", err))
+			online = false
 			break
 		}
 
@@ -40,6 +43,12 @@ func HandleComputerWebSocket(w http.ResponseWriter, r *http.Request) {
 			continue
 		}
 
+		service.AddComputerData(online, clientMessage)
 		slog.Info("Recieved message", slog.Any("message", clientMessage))
 	}
+}
+
+func HandleComputerGraphData(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(service.ComputerData)
 }
