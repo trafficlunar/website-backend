@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"log/slog"
 	"net/http"
+	"os"
 
 	"github.com/gorilla/websocket"
 )
@@ -18,6 +19,12 @@ var upgrader = websocket.Upgrader{
 }
 
 func HandleComputerWebSocket(w http.ResponseWriter, r *http.Request) {
+	if r.Header.Get("Authorization") != os.Getenv("WEBSOCKET_PASSWORD") {
+		w.WriteHeader(http.StatusUnauthorized)
+		w.Write([]byte("Unauthorized"))
+		return
+	}
+
 	conn, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
 		slog.Error("Error when upgrading websocket connection", slog.Any("error", err))
@@ -25,7 +32,7 @@ func HandleComputerWebSocket(w http.ResponseWriter, r *http.Request) {
 	}
 	defer conn.Close()
 
-	slog.Info("Websocket connection established!")
+	slog.Info("WebSocket connection established!")
 	service.ComputerData.Online = true
 
 	// Read messages
