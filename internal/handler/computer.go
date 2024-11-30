@@ -3,6 +3,7 @@ package handler
 import (
 	"backend/internal/model"
 	"backend/internal/service"
+	"backend/internal/worker"
 	"encoding/json"
 	"log/slog"
 	"net/http"
@@ -35,7 +36,6 @@ func HandleComputerWebSocket(w http.ResponseWriter, r *http.Request) {
 	slog.Info("WebSocket connection established!")
 	service.ComputerData.Online = true
 
-	// Read messages
 	for {
 		_, message, err := conn.ReadMessage()
 		if err != nil {
@@ -50,7 +50,7 @@ func HandleComputerWebSocket(w http.ResponseWriter, r *http.Request) {
 			continue
 		}
 
-		service.AddComputerData(clientMessage)
+		worker.QueuedClientMessage = clientMessage
 		slog.Info("Recieved message", slog.Any("message", clientMessage))
 	}
 }
