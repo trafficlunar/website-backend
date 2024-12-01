@@ -14,6 +14,16 @@ import (
 	"backend/internal/handler"
 )
 
+func getAllowedOrigins() []string {
+	allowedOrigins := []string{"https://axolotlmaid.com"}
+
+	if os.Getenv("DEVELOPMENT_MODE") == "true" {
+		allowedOrigins = append(allowedOrigins, "http://localhost:4321")
+	}
+
+	return allowedOrigins
+}
+
 func NewRouter() {
 	r := chi.NewRouter()
 
@@ -26,7 +36,7 @@ func NewRouter() {
 	r.Use(middleware.Timeout(60 * time.Second))
 	r.Use(httprate.LimitByRealIP(32, time.Minute))
 	r.Use(cors.Handler(cors.Options{
-		AllowedOrigins: []string{"https://axolotlmaid.com"},
+		AllowedOrigins: getAllowedOrigins(),
 		AllowedMethods: []string{"GET", "PATCH"},
 		AllowedHeaders: []string{"Content-Type"},
 		MaxAge:         300,
