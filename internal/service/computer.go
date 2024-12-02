@@ -11,11 +11,11 @@ var ComputerData model.ComputerData = model.ComputerData{
 }
 
 func initializeGraphData() []model.ComputerGraphData {
-	graphData := make([]model.ComputerGraphData, 50)
+	graphData := make([]model.ComputerGraphData, 60)
 
-	for i := 0; i < 50; i++ {
+	for i := 0; i < 60; i++ {
 		graphData[i] = model.ComputerGraphData{
-			Timestamp: time.Now().Truncate(1 * time.Minute).Add(time.Duration(-50+i) * time.Minute),
+			Timestamp: time.Now().Truncate(1 * time.Minute).Add(time.Duration(-60+i) * time.Minute),
 			Cpu:       0,
 			Ram:       0,
 		}
@@ -31,7 +31,7 @@ func AddComputerData(clientMessage model.ComputerWebSocketMessage) {
 		Ram:       int(clientMessage.Ram),
 	})
 
-	if len(ComputerData.Graph) > 50 {
+	if len(ComputerData.Graph) > 60 {
 		ComputerData.Graph = ComputerData.Graph[1:]
 	}
 }
