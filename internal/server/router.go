@@ -50,7 +50,6 @@ func NewRouter() {
 	r.With(httprate.LimitByRealIP(1, time.Hour)).Patch("/visit-counter", handler.HandlePatchVisitCounter)
 
 	r.Get("/currently-playing", handler.HandleGetCurrentlyPlaying)
-	r.Get("/status", handler.HandleGetStatus)
 
 	r.Get("/computer", handler.HandleComputerGraphData)
 	r.Get("/ws/computer", handler.HandleComputerWebSocket)
