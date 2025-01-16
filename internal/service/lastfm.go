@@ -15,7 +15,7 @@ func GetLastFMData() model.LastFMData {
 		Song:    "api error",
 		Artist:  "???",
 		Image:   "/missing.webp",
-		Url:     "https://www.last.fm/user/axolotlmaid" + os.Getenv("LASTFM_USERNAME"),
+		Url:     "https://www.last.fm/user/" + os.Getenv("LASTFM_USERNAME"),
 		Playing: false,
 	}
 
