@@ -15,7 +15,7 @@ import (
 )
 
 func getAllowedOrigins() []string {
-	allowedOrigins := []string{"https://axolotlmaid.com"}
+	allowedOrigins := []string{"https://trafficlunar.net"}
 
 	if os.Getenv("DEVELOPMENT_MODE") == "true" {
 		allowedOrigins = append(allowedOrigins, "http://localhost:4321")
@@ -43,7 +43,7 @@ func NewRouter() {
 	}))
 
 	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
-		http.Redirect(w, r, "https://axolotlmaid.com", http.StatusPermanentRedirect)
+		http.Redirect(w, r, "https://trafficlunar.net", http.StatusPermanentRedirect)
 	})
 
 	r.Get("/visit-counter", handler.HandleGetVisitCounter)
