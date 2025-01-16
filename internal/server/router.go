@@ -46,13 +46,11 @@ func NewRouter() {
 		http.Redirect(w, r, "https://trafficlunar.net", http.StatusPermanentRedirect)
 	})
 
-	r.Get("/visit-counter", handler.HandleGetVisitCounter)
-	r.With(httprate.LimitByRealIP(1, time.Hour)).Patch("/visit-counter", handler.HandlePatchVisitCounter)
-
-	r.Get("/currently-playing", handler.HandleGetCurrentlyPlaying)
-
+	r.Get("/visit", handler.HandleGetVisitCounter)
+	r.With(httprate.LimitByRealIP(1, time.Hour)).Patch("/visit", handler.HandlePatchVisitCounter)
+	r.Get("/song", handler.HandleGetCurrentlyPlaying)
 	r.Get("/computer", handler.HandleComputerGraphData)
-	r.Get("/ws/computer", handler.HandleComputerWebSocket)
+	r.Get("/computer/ws", handler.HandleComputerWebSocket)
 
 	port := os.Getenv("PORT")
 	if len(port) == 0 {
