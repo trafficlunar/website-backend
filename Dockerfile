@@ -1,4 +1,5 @@
-FROM golang:1.23
+# build
+FROM golang:1.23 AS builder
 
 WORKDIR /app
 
@@ -9,6 +10,13 @@ COPY . .
 
 RUN go build -o /backend ./cmd/backend
 
+# copy
+FROM alpine:latest
+
+WORKDIR /app
+
+COPY --from=builder /backend .
+
 EXPOSE 8080
 
-CMD [ "/backend" ]
+CMD [ "./backend" ]
